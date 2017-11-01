@@ -25,6 +25,7 @@
   "homepage": "https://github.com/KeithHubert/Github-Battle-Practice#readme",
   "dependencies": {
     "axios": "^0.17.0",
+    "query-string": "^5.0.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2"
