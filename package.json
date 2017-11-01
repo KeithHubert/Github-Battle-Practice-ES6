@@ -14,6 +14,9 @@
       "react"
     ]
   },
+  "engines": {
+    "node": "7.9.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KeithHubert/Github-Battle-Practice.git"
