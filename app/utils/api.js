@@ -58,8 +58,18 @@ function sortPlayers (players) {
 
 module.exports = {
   battle: function (players) {
-
+    return axios.all(players.map(getUserData))
+      .then(sortPlayers)
+      .catch(handleError)
   },
+
+  // When battle function runs, map over players, for each item in players we
+  // getUserData, which calls getProfile and getRepos on specific player,
+  // once data is returned it is an object formatted with profile and score.
+  // Once all information is returned sortPlayers is called which sorts the array
+  // (first player being the winner). If error it is caught with .catch(handleError)
+
+
   fetchPopularRepos: function (language) {
     var encodedURI = window.encodeURI('https://api.github.com/search/repositories?q=stars:>1+language:'+ language + '&sort=stars&order=desc&type=Repositories');
 
@@ -69,3 +79,5 @@ module.exports = {
       });
   }
 }
+
+//axios.all takes in an array of promises
