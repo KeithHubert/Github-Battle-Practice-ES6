@@ -1,6 +1,7 @@
 var React = require('react');
 var PropTypes = require('prop-types');
 var api = require('../utils/api');
+var Loading = require('./Loading');
 
 function SelectLanguage (props) {
   var languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python'];
@@ -9,7 +10,7 @@ function SelectLanguage (props) {
     <ul className='languages'>
       {languages.map(function (lang) {
         return (
-          <li 
+          <li
             style={lang === props.selectedLanguage ? { color: '#d0021b'}:null}
             onClick={props.onSelect.bind(null, lang)}
             key={lang}>
@@ -66,7 +67,7 @@ class Popular extends React.Component {
       selectedLanguage: 'All',
       repos: null
     };
-    
+
     this.updateLanguage = this.updateLanguage.bind(this);
   }
   componentDidMount () {
@@ -79,7 +80,7 @@ class Popular extends React.Component {
         repos:null,
       }
     });
-    
+
     api.fetchPopularRepos(lang)
       .then(function (repos) {
         this.setState(function () {
@@ -89,7 +90,7 @@ class Popular extends React.Component {
         })
       }.bind(this));
   }
-  
+
   render() {
     return (
       <div>
@@ -98,7 +99,7 @@ class Popular extends React.Component {
           onSelect={this.updateLanguage}
         />
         {!this.state.repos
-          ? <p>LOADING</p>
+          ? <Loading />
           : <RepoGrid repos={this.state.repos} />}
       </div>
     )
@@ -107,13 +108,13 @@ class Popular extends React.Component {
 
 module.exports = Popular;
 
-// Managing and Updating Component State 
+// Managing and Updating Component State
 
 //ES6 Arrow Function Replaces:
 
 // {languages.map((lang) => {
 //   return (
-//     <li 
+//     <li
 //       style={lang === this.state.selectedLanguage ? { color: '#d0021b'}:null}
 //       onClick={this.updateLanguage.bind(null, lang)}
 //       key={lang}>
@@ -123,4 +124,4 @@ module.exports = Popular;
 // })}
 
 // .this inside the function is the same as .this outside of the function
-// so you can remove the second arguement 
+// so you can remove the second arguement
