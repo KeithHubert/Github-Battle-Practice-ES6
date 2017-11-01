@@ -1,6 +1,7 @@
 var React = require('react');
 var queryString = require('query-string');
 var api = require('../utils/api');
+var Link = require('react-router-dom').Link;
 
 class Results extends React.Component {
   constructor(props) {
@@ -19,8 +20,24 @@ class Results extends React.Component {
       players.playerOneName,
       players.playerTwoName
     ]).then(function (results) {
+      if (results === null) {
+        return this.setState(function () {
+          return {
+            error: 'Looks like there was an error. Check that both users exist on Github',
+            loading: false,
+          }
+        });
+      }
 
-    });
+      this.setState(function () {
+        return {
+          error: null,
+          winner: results[0],
+          loser: results[1],
+          loading: false
+        }
+      });
+    }.bind(this));
   }
   render () {
     var error = this.state.error;
@@ -32,8 +49,17 @@ class Results extends React.Component {
       return <p>Loading</p>
     }
 
+    if (error) {
+      return (
+        <div>
+          <p>{error}</p>
+          <Link to='/battle'>Reset</Link>
+        </div>
+      )
+    }
+
     return (
-      <div>Results</div>
+      <div>{JSON.stringify(this.state, null, 2)}</div>
     )
   }
 }
