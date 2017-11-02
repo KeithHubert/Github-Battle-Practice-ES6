@@ -80,3 +80,4 @@ module.exports = {
 }
 
 //axios.all takes in an array of promises
+//will change to fetch
