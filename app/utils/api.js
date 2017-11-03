@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const id = "838d136757aac6088edb";
 const sec = "942abfabdef3e68b719c572c89c89518079c8722";
@@ -43,12 +43,17 @@ function sortPlayers (players) {
   return players.sort((a,b) => b.score - a.score);
 }
 
-module.exports = {
-  battle (players) {
-    return Promise.all(players.map(getUserData))
-      .then(sortPlayers)
-      .catch(handleError)
-  },
+export function battle (players) {
+  return Promise.all(players.map(getUserData))
+    .then(sortPlayers)
+    .catch(handleError)
+}
+
+export function fetchPopularRepos (language) {
+  const encodedURI = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`);
+
+  return axios.get(encodedURI).then(({ data }) => data.items);
+}
 
   // When battle function runs, map over players, for each item in players we
   // getUserData, which calls getProfile and getRepos on specific player,
@@ -56,10 +61,5 @@ module.exports = {
   // Once all information is returned sortPlayers is called which sorts the array
   // (first player being the winner). If error it is caught with .catch(handleError)
 
-
-  fetchPopularRepos (language) {
-    const encodedURI = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`);
-
-    return axios.get(encodedURI).then(({ data }) => data.items);
-  }
-};
+  // import fetchPopularRepos from '../api' is 'default' export syntax
+  // import { fetchPopularRepos } from '../api'
