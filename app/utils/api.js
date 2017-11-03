@@ -1,4 +1,4 @@
-const axios = require('axios');]
+const axios = require('axios');
 
 const id = "838d136757aac6088edb";
 const sec = "942abfabdef3e68b719c572c89c89518079c8722";
@@ -63,6 +63,3 @@ module.exports = {
     return axios.get(encodedURI).then(({ data }) => data.items);
   }
 };
-
-//axios.all takes in an array of promises
-//will change to fetch
